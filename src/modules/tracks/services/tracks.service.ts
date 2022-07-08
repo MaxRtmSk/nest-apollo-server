@@ -11,7 +11,12 @@ export class TracksService {
     });
   }
 
-  findOneById(id: string): any {
-    return '[]';
+  async findOneById(id: string): Promise<any> {
+    try {
+      const result = await this.client.get(`/${id}`);
+      return result.data;
+    } catch (e) {
+      return e;
+    }
   }
 }
