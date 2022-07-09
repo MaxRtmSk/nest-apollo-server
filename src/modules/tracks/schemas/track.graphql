@@ -9,6 +9,6 @@ type Track {
     genres: [String]
 }
 
-type Query {
+extend type Query {
     track(id: ID!): Track
 }

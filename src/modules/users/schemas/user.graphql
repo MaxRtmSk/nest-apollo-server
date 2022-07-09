@@ -5,3 +5,16 @@ type User {
     password: String
     email: String!
 }
+
+type JWT {
+    jwt: String
+}
+
+type Query {
+    user(id: ID!): User
+    jwt(email: String!, password: String!): JWT
+}
+
+type Mutation {
+    register(firstName: String!, lastName: String!, password: String!, email: String!, favouriteArtistIds: [String]): User
+}
