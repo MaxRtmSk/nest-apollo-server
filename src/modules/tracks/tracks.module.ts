@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from "@nestjs/common";
 import { TracksResolver } from './resolvers/tracks.resolver';
 import { TracksService } from './services/tracks.service';
 
@@ -8,7 +8,12 @@ import { GenresModule } from '../genres/genres.module';
 import { ArtistsModule } from '../artists/artists.module';
 
 @Module({
-  imports: [AlbumsModule, BandsModule, GenresModule, ArtistsModule],
+  imports: [
+    BandsModule,
+    GenresModule,
+    ArtistsModule,
+    forwardRef(() => AlbumsModule),
+  ],
   providers: [TracksService, TracksResolver],
   exports: [TracksService],
 })

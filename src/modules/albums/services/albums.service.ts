@@ -1,7 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import axios from "axios";
-import { Args, Mutation } from "@nestjs/graphql";
-import { RegisterInput } from "../../users/dto/register.input";
+import { Injectable } from '@nestjs/common';
+import axios from 'axios';
 
 @Injectable()
 export class AlbumsService {
@@ -9,30 +7,83 @@ export class AlbumsService {
 
   constructor() {
     this.client = axios.create({
-      baseURL: process.env.ALBUMS_URL
+      baseURL: process.env.ALBUMS_URL,
     });
   }
 
   async findOneById(id: string): Promise<any> {
     try {
       const { data } = await this.client.get(`/${id}`);
-      return { data, id: data._id };
+      return { ...data, id: data._id };
     } catch (e) {
       return e;
     }
   }
 
-  async findAll(): Promise<any> {
+  async findAll(limit, offset): Promise<any> {
     try {
-      const { data } = await this.client.get();
+      const { data } = await this.client.get('/', {
+        params: {
+          limit,
+          offset,
+        },
+      });
 
-      const result = await Promise.all(
+      const items = await Promise.all(
         data.items.map((album) => {
           return { ...album, id: album._id };
         }),
       );
 
-      return result;
+      return { ...data, items };
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
+  }
+
+  async create(album, token): Promise<any> {
+    try {
+      const { data } = await this.client.post(
+        '/',
+        {
+          ...album,
+        },
+        {
+          headers: { Authorization: token },
+        },
+      );
+      return { ...data, id: data._id };
+    } catch (e) {
+      console.log(e.message);
+      return e;
+    }
+  }
+
+  async update(id, album, token): Promise<any> {
+    try {
+      const { data } = await this.client.put(
+        `/${id}`,
+        {
+          ...album,
+        },
+        {
+          headers: { Authorization: token },
+        },
+      );
+      return { ...data, id: data._id };
+    } catch (e) {
+      console.log(e.message);
+      return e;
+    }
+  }
+
+  async delete(id, token): Promise<any> {
+    try {
+      const { data } = await this.client.delete(`/${id}`, {
+        headers: { Authorization: token },
+      });
+      return data;
     } catch (e) {
       console.log(e);
       return e;
