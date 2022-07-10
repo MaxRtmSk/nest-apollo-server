@@ -15,8 +15,8 @@ export class AlbumsService {
 
   async findOneById(id: string): Promise<any> {
     try {
-      const result = await this.client.get(`/${id}`);
-      return result.data;
+      const { data } = await this.client.get(`/${id}`);
+      return { data, id: data._id };
     } catch (e) {
       return e;
     }
@@ -24,8 +24,15 @@ export class AlbumsService {
 
   async findAll(): Promise<any> {
     try {
-      const result = await this.client.get();
-      return result.data.items;
+      const { data } = await this.client.get();
+
+      const result = await Promise.all(
+        data.items.map((album) => {
+          return { ...album, id: album._id };
+        }),
+      );
+
+      return result;
     } catch (e) {
       console.log(e);
       return e;
