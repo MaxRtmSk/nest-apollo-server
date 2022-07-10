@@ -7,6 +7,7 @@ import { TracksModule } from './modules/tracks/tracks.module';
 import { UsersModule } from './modules/users/users.module';
 import { AlbumsModule } from './modules/albums/albums.module';
 import { ArtistsModule } from './modules/artists/artists.module';
+import { GenresModule } from './modules/genres/genres.module';
 
 @Module({
   imports: [
@@ -15,11 +16,12 @@ import { ArtistsModule } from './modules/artists/artists.module';
     UsersModule,
     AlbumsModule,
     ArtistsModule,
+    GenresModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
       context: (context) => {
-        return context;
+        return { token: context.req.headers.authorization };
       },
     }),
   ],

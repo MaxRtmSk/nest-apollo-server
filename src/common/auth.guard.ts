@@ -7,8 +7,9 @@ export class VerifyGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context).getContext();
     const token = ctx.req.headers.authorization;
+    const url = `${process.env.USERS_URL}/verify`;
+
     try {
-      const url = `${process.env.USERS_URL}/verify`;
       await axios.post(
         url,
         {},
