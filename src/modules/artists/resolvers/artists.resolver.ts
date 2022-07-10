@@ -14,8 +14,11 @@ export class ArtistsResolver {
   }
 
   @Query(() => String)
-  async artists(): Promise<any> {
-    const result = await this.albumsService.findAll();
+  async artists(
+    @Args('limit', { defaultValue: 5 }) limit: number,
+    @Args('offset', { defaultValue: 0 }) offset: number,
+  ): Promise<any> {
+    const result = await this.albumsService.findAll(limit, offset);
     return result;
   }
 }
