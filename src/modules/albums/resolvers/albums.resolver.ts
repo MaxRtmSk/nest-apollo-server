@@ -81,7 +81,6 @@ export class AlbumsResolver {
     console.log(artistsIds);
     const result = await Promise.all(
       artistsIds.map(async (artistsId) => {
-        console.log('artistsId', artistsId);
         return this.artistsService.findOneById(artistsId);
       }),
     );
