@@ -22,6 +22,11 @@ export class UsersResolver {
     return await this.usersService.login(email, password);
   }
 
+  @Query()
+  async user(@Args('id') id: string): Promise<any> {
+    return this.usersService.findOneById(id);
+  }
+
   @Mutation(() => User)
   async register(@Args() args: RegisterInput): Promise<any> {
     return this.usersService.register(args);

@@ -43,7 +43,7 @@ export class UsersService {
         email,
         favouriteArtistIds,
       });
-      return data;
+      return { ...data, id: data._id };
     } catch (e) {
       console.log(e);
       return e;

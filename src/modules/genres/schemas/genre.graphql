@@ -8,7 +8,7 @@ type Genre {
 
 extend type Query {
     genre(id: ID!):Genre
-    genres(limit: Int, offset: Int):[Genre]
+    genres(limit: Int, offset: Int):GenresResponse
 }
 
 extend type Mutation {
@@ -29,4 +29,11 @@ input UpdateGenre {
     description: String
     country: String
     year: Int
+}
+
+type GenresResponse {
+    total: Int
+    offset: Int
+    limit: Int
+    items: [Genre]
 }

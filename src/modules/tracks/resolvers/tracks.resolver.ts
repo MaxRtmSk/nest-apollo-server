@@ -12,6 +12,7 @@ import { GenresService } from '../../genres/services/genres.service';
 import { AlbumsService } from '../../albums/services/albums.service';
 import { ArtistsService } from '../../artists/services/artists.service';
 import { BandsService } from '../../bands/services/bands.service';
+import { forwardRef, Inject } from "@nestjs/common";
 
 interface Track {
   _id: string;
@@ -31,6 +32,7 @@ export class TracksResolver {
     private readonly genresService: GenresService,
     private readonly albumsService: AlbumsService,
     private readonly artistsService: ArtistsService,
+    @Inject(forwardRef(() => BandsService))
     private readonly bandsService: BandsService,
   ) {}
 

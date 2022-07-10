@@ -17,7 +17,7 @@ type Member {
 
 extend type Query {
     band(id: ID!):Band
-    bands(limit: Int, offset: Int):[Band]
+    bands(limit: Int, offset: Int):BandsResponse
 }
 
 extend type Mutation {
@@ -46,4 +46,11 @@ input UpdateBand {
     website: String
     members: [AddMember]
     genresIds: [ID]
+}
+
+type BandsResponse {
+    total: Int
+    offset: Int
+    limit: Int
+    items: [Band]
 }

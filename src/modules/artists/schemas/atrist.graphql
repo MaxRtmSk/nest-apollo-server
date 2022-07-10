@@ -1,16 +1,52 @@
 type Artist {
     id: ID!
-    firstName: String
-    secondName: String
+    firstName: String!
+    secondName: String!
     middleName: String
     birthDate: String
     birthPlace: String
-    country: String
+    country: String!
     bands: [Band]
     instruments: [String]
 }
 
 extend type Query {
     artist(id: ID!):Artist
-    artists:[Artist]
+    artists(limit: Int, offset: Int):ArtistsResponse
+}
+
+extend type Mutation {
+    createArtist(artist: CreateArtist):Artist
+    updateArtist(id: ID!, artist: UpdateArtist):Artist
+    deleteArtist(id: ID!): DeleteResponse
+}
+
+input CreateArtist {
+    firstName: String
+    secondName: String
+    middleName: String
+    birthDate: String
+    birthPlace: String
+    country: String
+    bandsIds: [ID]
+    instruments: [String]
+}
+
+
+input UpdateArtist {
+    firstName: String
+    secondName: String
+    middleName: String
+    birthDate: String
+    birthPlace: String
+    country: String
+    bandsIds: [ID]
+    instruments: [String]
+}
+
+type ArtistsResponse {
+    total: Int
+    offset: Int
+    limit: Int
+    items: [Artist]
 }

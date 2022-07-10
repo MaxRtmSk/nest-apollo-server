@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { forwardRef, Inject } from '@nestjs/common';
 
 import { BandsService } from '../services/bands.service';
 import { GenresService } from '../../genres/services/genres.service';

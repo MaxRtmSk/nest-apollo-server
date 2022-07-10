@@ -29,13 +29,13 @@ export class GenresService {
         },
       });
 
-      const result = await Promise.all(
+      const items = await Promise.all(
         data.items.map((genre) => {
           return { ...genre, id: genre._id };
         }),
       );
 
-      return result;
+      return { ...data, items };
     } catch (e) {
       console.log(e);
       return e;

@@ -29,13 +29,13 @@ export class BandsService {
         },
       });
 
-      const result = await Promise.all(
+      const items = await Promise.all(
         data.items.map((band) => {
           return { ...band, id: band._id };
         }),
       );
 
-      return result;
+      return { ...data, items };
     } catch (e) {
       console.log(e);
       return e;
