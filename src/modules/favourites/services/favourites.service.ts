@@ -13,13 +13,9 @@ export class FavouritesService {
 
   async getFavourites(token): Promise<any> {
     try {
-      const { data } = await this.client.get(
-        '/',
-        {},
-        {
-          headers: { Authorization: token },
-        },
-      );
+      const { data } = await this.client.get('/', {
+        headers: { Authorization: token },
+      });
 
       return data;
     } catch (e) {

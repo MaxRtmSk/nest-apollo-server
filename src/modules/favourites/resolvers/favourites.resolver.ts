@@ -32,7 +32,7 @@ export class FavouritesResolver {
   ) {}
 
   @Query(() => String)
-  async album(@Context('token') token: string): Promise<{ title: any }> {
+  async favourites(@Context('token') token: string): Promise<{ title: any }> {
     const result = await this.favouritesService.getFavourites(token);
     return result;
   }
